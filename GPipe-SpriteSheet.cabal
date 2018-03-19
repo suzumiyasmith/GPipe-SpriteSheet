@@ -1,0 +1,73 @@
+-- This file has been generated from package.yaml by hpack version 0.20.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 9e9df89bd2676ab8fd2e4c00aad5b6b709ae7abad2668cb0aea269d49b40ff56
+
+name:           GPipe-SpriteSheet
+version:        0.1.0.0
+description:    Please see the README on Github at <https://github.com/suzumiyasmith/GPipe-SpriteSheet#readme>
+homepage:       https://github.com/suzumiyasmith/GPipe-SpriteSheet#readme
+bug-reports:    https://github.com/suzumiyasmith/GPipe-SpriteSheet/issues
+author:         Suzumiya
+maintainer:     suzumiyasmith@gmail.com
+copyright:      Copyright: (c) 2017-2018 Suzumiya
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+
+extra-source-files:
+    ChangeLog.md
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/suzumiyasmith/GPipe-SpriteSheet
+
+library
+  hs-source-dirs:
+      src
+  default-extensions: MultiParamTypeClasses FunctionalDependencies RankNTypes ExistentialQuantification ScopedTypeVariables FlexibleContexts FlexibleInstances EmptyDataDecls KindSignatures BangPatterns TypeSynonymInstances NamedFieldPuns PatternGuards GeneralizedNewtypeDeriving TypeFamilies StandaloneDeriving RecordWildCards OverloadedStrings GADTs DeriveDataTypeable DeriveGeneric DefaultSignatures InstanceSigs ViewPatterns TupleSections DoAndIfThenElse MultiWayIf LambdaCase DeriveFunctor DeriveTraversable DeriveFoldable ConstraintKinds PolyKinds DataKinds AutoDeriveTypeable BinaryLiterals PartialTypeSignatures
+  build-depends:
+      GPipe
+    , JuicyPixels
+    , base >=4.7 && <5
+    , bytestring
+    , cassava
+    , containers
+    , linear
+    , mtl
+    , split
+    , vector
+  exposed-modules:
+      Graphics.GPipe.SpriteSheet
+  other-modules:
+      Paths_GPipe_SpriteSheet
+  default-language: Haskell2010
+
+test-suite GPipe-SpriteSheet-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  hs-source-dirs:
+      test
+  default-extensions: MultiParamTypeClasses FunctionalDependencies RankNTypes ExistentialQuantification ScopedTypeVariables FlexibleContexts FlexibleInstances EmptyDataDecls KindSignatures BangPatterns TypeSynonymInstances NamedFieldPuns PatternGuards GeneralizedNewtypeDeriving TypeFamilies StandaloneDeriving RecordWildCards OverloadedStrings GADTs DeriveDataTypeable DeriveGeneric DefaultSignatures InstanceSigs ViewPatterns TupleSections DoAndIfThenElse MultiWayIf LambdaCase DeriveFunctor DeriveTraversable DeriveFoldable ConstraintKinds PolyKinds DataKinds AutoDeriveTypeable BinaryLiterals PartialTypeSignatures
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -g
+  build-depends:
+      GPipe
+    , GPipe-GLFW
+    , GPipe-SpriteSheet
+    , JuicyPixels
+    , async
+    , base >=4.7 && <5
+    , bytestring
+    , cassava
+    , containers
+    , linear
+    , mtl
+    , random
+    , split
+    , vector
+  other-modules:
+      Paths_GPipe_SpriteSheet
+  default-language: Haskell2010

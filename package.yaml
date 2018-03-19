@@ -1,0 +1,91 @@
+name:                GPipe-SpriteSheet
+version:             0.1.0.0
+github:              "suzumiyasmith/GPipe-SpriteSheet"
+license:             BSD3
+author:              "Suzumiya"
+maintainer:          "suzumiyasmith@gmail.com"
+copyright:           "Copyright: (c) 2017-2018 Suzumiya"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Graphics
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on Github at <https://github.com/suzumiyasmith/GPipe-SpriteSheet#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- GPipe
+- linear
+- vector
+- split
+- bytestring
+- JuicyPixels
+- cassava
+- containers
+- mtl
+
+default-extensions:
+- MultiParamTypeClasses
+- FunctionalDependencies
+- RankNTypes
+- ExistentialQuantification
+- ScopedTypeVariables
+- FlexibleContexts
+- FlexibleInstances
+- EmptyDataDecls
+- KindSignatures
+- BangPatterns
+- TypeSynonymInstances
+  #- NoImplicitPrelude
+- NamedFieldPuns
+- PatternGuards
+- GeneralizedNewtypeDeriving
+- TypeFamilies
+- StandaloneDeriving
+- RecordWildCards
+- OverloadedStrings
+- GADTs
+- DeriveDataTypeable
+- DeriveGeneric
+- DefaultSignatures
+- InstanceSigs
+- ViewPatterns
+- TupleSections
+- DoAndIfThenElse
+- MultiWayIf
+- LambdaCase
+- DeriveFunctor
+- DeriveTraversable
+- DeriveFoldable
+- ConstraintKinds
+- PolyKinds
+- DataKinds
+- AutoDeriveTypeable
+- BinaryLiterals
+- PartialTypeSignatures
+
+library:
+  source-dirs: src
+
+tests:
+  GPipe-SpriteSheet-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    # - --enable-profiling
+    - -g
+    dependencies:
+    - GPipe-SpriteSheet
+    - GPipe-GLFW
+    - random
+    - async
