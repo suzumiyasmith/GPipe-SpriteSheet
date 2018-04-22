@@ -28,21 +28,19 @@ procPicture raw = (RGBA8, V2 w h, dd)  where
   dd =
     fmap (\[r, g, b, a] -> V4 r g b a) $
     chunksOf 4 $
-    fmap (\s -> fromIntegral s / fromIntegral (maxBound :: Word8)) $
+    (\s -> fromIntegral s / fromIntegral (maxBound :: Word8)) <$>
     S.toList ds
 
 procSheet :: LB.ByteString -> V2 Int -> Map.Map String [(V2 Float, V2 Float)]
-procSheet sh (V2 pw ph) = Map.fromList $ fmap ff $ V.toList r where
+procSheet sh (V2 pw ph) = Map.fromList $ ff <$> V.toList r where
   Right r = C.decode C.NoHeader sh :: Either String (V.Vector (String, Int, Int, Int, Int))
-  ff (s, x, y, w, h) = (s,) $ zip (fmap fromIntegral <$> box (-w) w (-h) h) ((\(V2 x y) -> V2 (x/fromIntegral pw) (y/fromIntegral ph)) <$> fmap fromIntegral <$> box x (x+w) y (y+h))
-
-box x0 x1 y0 y1 = [V2 x0 y0, V2 x1 y0, V2 x0 y1, V2 x1 y0, V2 x0 y1, V2 x1 y1]
+  ff (s, x, y, w, h) = (s,) $ zip (fmap fromIntegral <$> box (-w) w (-h) h) ((\(V2 x y) -> V2 (fromIntegral x / fromIntegral pw) (fromIntegral y / fromIntegral ph)) <$> box x (x+w) y (y+h))
+  box x0 x1 y0 y1 = [V2 x0 y0, V2 x1 y0, V2 x0 y1, V2 x1 y0, V2 x0 y1, V2 x1 y1]
 
 readSprites :: LB.ByteString -> B.ByteString -> ((Format RGBAFloat, V2 Int, [V4 Float]), Map.Map String [(V2 Float, V2 Float)])
 readSprites sh pic = ((f, wh, d), r) where
   (f, wh, d) = procPicture pic
   r = procSheet sh wh
-
 
 renderDevice ::
      ContextHandler ctx
@@ -60,7 +58,7 @@ renderDevice win winSize clearColor (pic, spriteSheet) bufferLimit displayData =
 
   forever $ do
     bs <- liftIO displayData
-    writeBuffer buf 0 $ concat $ (\(k, t) -> first (transferSprite t) <$> spriteSheet Map.! k) <$> bs
+    writeBuffer buf 0 $ concat $ (\(k, t) -> first (transferSprite winSize t) <$> spriteSheet Map.! k) <$> bs
 
     render $ do
       clearWindowColor win clearColor
@@ -69,14 +67,11 @@ renderDevice win winSize clearColor (pic, spriteSheet) bufferLimit displayData =
       p1Shader pa
     swapWindowBuffers win
 
-transferSprite :: (V2 Float, V2 Float, Float) -> V2 Float -> V2 Float
-transferSprite (p, s, r) v = rotateMatrix2D r !* (s * (v + p))
+transferSprite :: V2 Int -> (V2 Float, V2 Float, Float) -> V2 Float -> V2 Float
+-- transferSprite (p, s, r) v = rotateMatrix2D r !* (s * (v + p)) where
+transferSprite winSize (p, s, r) = (/ (fromIntegral <$> winSize)) . (p +) . (s *) . (rotateMatrix2D r !*) where
+  rotateMatrix2D r = V2 (V2 (cos r) (sin r)) (V2 (- sin r) (cos r))
 
-
-rotateMatrix2D r = V2 (V2 (cos r) (-sin r)) (V2 (sin r) (cos r))
-
-toV4 :: V2 VFloat -> V4 VFloat
-toV4 (V2 x y) = V4 x y 0 1
 initTexture2D ::
      ( ContextHandler ctx
      , MonadIO m
@@ -114,6 +109,9 @@ playerShader tex win winSize = do
   drawWindowColor
     (const (win, ContextColorOption simpleBlender (pure True)))
     fragmentStream2
+
+toV4 :: V2 VFloat -> V4 VFloat
+toV4 (V2 x y) = V4 x y 0 1
 
 simpleBlender :: Blending
 simpleBlender =

@@ -1,5 +1,5 @@
 name:                GPipe-SpriteSheet
-version:             0.1.0.0
+version:             0.1.1.0
 github:              "suzumiyasmith/GPipe-SpriteSheet"
 license:             BSD3
 author:              "Suzumiya"
@@ -11,8 +11,8 @@ extra-source-files:
 - ChangeLog.md
 
 # Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Graphics
+synopsis:            Display 2D texture stored in sprite sheet in a single render step
+category:            Graphics
 
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
@@ -82,8 +82,6 @@ tests:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
-    # - --enable-profiling
-    - -g
     dependencies:
     - GPipe-SpriteSheet
     - GPipe-GLFW
