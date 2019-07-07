@@ -39,15 +39,20 @@ mainTest = do
       -- putMVar m [("sprite" <> show (2 :: Int), (V2 (150 * sin (10 * ss)) (150 * cos (10 * ss)), V2 0.001 0.001, 0))]
       -- tryPutMVar m $ fmap ((,) $ "sprite" <> show (2 :: Int)) $ bullets ss <$> fromIntegral <$> [0..(floor $ 10 * ss)]
       forkIO $ writeIORef m $ fmap ((,) $ "sprite" <> show (2 :: Int)) $ bullets ss <$> fromIntegral <$> [0..(floor $ 10 * ss)]
-      -- forkIO $ writeIORef m $ fmap ((,) $ "sprite" <> show (sn :: Int)) $ testPosition <$> [1,2,3]
+      -- forkIO $ writeIORef m $ fmap ((,) $ "sprite" <> show (2 :: Int)) $ testPosition <$> [1,2]
       threadDelay (16 * 1000)
 
   putStrLn "over"
 
-bullets t i = (V2 (log (1 + t/i) * 150 * (1 / i + 1) * sin ((i) * t)) (log (1 + t/i) * 150 * (1 / i + 1) * cos ((i) * t)), pure (2/(sqrt i)),  t * pi / 2)
+bullets t i =
+  (V2
+    (log (1 + t/i) * 150 * (1 / i + 1) * sin ((i) * t))
+    (log (1 + t/i) * 150 * (1 / i + 1) * cos ((i) * t))
+  , pure (2/(sqrt i))
+  , t * pi / 2)
 
 testPosition 1 = (V2 0 0, V2 1 1, pi/4)
-testPosition 2 = (V2 1 0, V2 1 1, 0)
+testPosition 2 = (V2 (1920) ((-1080)), V2 1 1, 0)
 testPosition 3 = (V2 0 1, V2 1 1, 0)
 
 test1 :: IO ()

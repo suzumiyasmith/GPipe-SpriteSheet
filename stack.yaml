@@ -15,7 +15,7 @@
 # resolver:
 #  name: custom-snapshot
 #  location: "./custom-snapshot.yaml"
-resolver: lts-11.5
+resolver: lts-13.27
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -40,7 +40,9 @@ packages:
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)
 extra-deps:
-- GPipe-GLFW-1.4.1.1
+- GPipe-2.2.4
+- git: https://github.com/suzumiyasmith/GPipe-GLFW.git
+  commit: e9eb5155a921b7b5469f4e181e47d37a9e9d8178
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
